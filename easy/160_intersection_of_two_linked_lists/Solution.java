@@ -11,22 +11,40 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        HashMap<ListNode,Integer> hasOccured = new HashMap<ListNode,Integer>(); 
-        ListNode res = null;
+        if(headA == null || headB == null) return null;
         
-        ListNode temp = headA;
-        while(temp != null) {
-            hasOccured.put(temp,1);
-            temp = temp.next;
+        Integer sizeA = calcSize(headA);
+        Integer sizeB = calcSize(headB);
+        
+        ListNode curA = headA, curB = headB;
+        if(sizeA > sizeB) {
+            curA = moveDelta(curA, sizeA - sizeB);
+        } else {
+            curB = moveDelta(curB, sizeB - sizeA);
         }
         
-        temp = headB;
+        while(curA != null && curB != null) {
+            if(curA == curB) return curA;
+            curA = curA.next;
+            curB = curB.next;
+        }
+        return null;
+    }
+    
+    public Integer calcSize(ListNode temp) {
+        Integer result = 0;
         while(temp != null) {
-            if(hasOccured.containsKey(temp)) {
-                return temp;
-            }
+            ++result;
             temp = temp.next;
         }
-        return res;
+        return result;
+    }
+    
+    public ListNode moveDelta(ListNode temp,Integer delta) {
+        while(delta > 0) {
+            temp = temp.next;
+            --delta;
+        }
+        return temp;
     }
 }
