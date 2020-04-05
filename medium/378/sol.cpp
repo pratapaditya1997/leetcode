@@ -1,9 +1,10 @@
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {
-        long long int lo=-1e10, hi=1e10, mid, ans=0;
+        int n = matrix.size();
+        int lo=matrix[0][0], hi=matrix[n-1][n-1], mid, ans=0;
         
-        auto lessThan = [&matrix, &k](long long int mid) {
+        auto lessThan = [&matrix, &k](int mid) {
             int ret = 0;
             for(auto v: matrix) {
                 ret += upper_bound(v.begin(), v.end(), mid) - v.begin();
@@ -12,7 +13,7 @@ public:
         };
         
         while(lo <= hi) {
-            mid = (lo+hi)/2;
+            mid = lo + (hi-lo)/2;
             if(lessThan(mid) >= k) {
                 hi = mid-1;
                 ans = mid;
