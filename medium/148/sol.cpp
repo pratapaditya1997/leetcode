@@ -9,15 +9,7 @@
 class Solution {
 public:
     ListNode* merge(ListNode *l, ListNode *r) {
-        ListNode *head = nullptr;
-        if(l->val <= r->val) {
-            head = l;
-            l = l->next;
-        } else {
-            head = r;
-            r = r->next;
-        }
-        
+        ListNode *head = new ListNode(0);
         ListNode *temp = head;
         while(l != nullptr && r != nullptr) {
             if(l->val <= r->val) {
@@ -32,7 +24,7 @@ public:
         
         if(l != nullptr) temp->next = l;
         if(r != nullptr) temp->next = r;
-        return head;
+        return head->next;
     }
     
     ListNode* sortList(ListNode* head) {
