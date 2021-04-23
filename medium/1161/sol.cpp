@@ -7,14 +7,18 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
+const int N = 1e4 + 4;
+int level_sum[N];
+
 class Solution {
 public:
     int max_level = -1;
-    vector<int> level_sum;
     
     int maxLevelSum(TreeNode* root) {
+        memset(level_sum, 0, sizeof level_sum);
         dfs(root,0);
-        int ans = 0, best = 0;
+        int ans = 0, best = INT_MIN;
         for(int i=0; i<max_level; i++) {
             if(level_sum[i] > best) {
                 best = level_sum[i];
@@ -25,14 +29,10 @@ public:
     }
     
     void dfs(TreeNode* node, int level) {
+        max_level = max(max_level, level);
         if(node == nullptr) return;
-        if(level > max_level) {
-            max_level = level;
-            level_sum.push_back(0);
-        }
         level_sum[level] += node->val;
         dfs(node->left, level+1);
         dfs(node->right, level+1);
     }
 };
-
