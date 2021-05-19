@@ -42,12 +42,12 @@ public:
             }
         }
         
-        set<int> s;
+        unordered_map<int, int> m;
         int ans = 0;
         for (int i=0; i<n; i++) {
             int par = d.get(i);
-            if (s.find(par) == s.end()) {
-                s.insert(par);
+            if (m.find(par) == m.end()) {
+                m[par] = 1;
                 ans += (d.sz[par] - 1);
             }
         }
