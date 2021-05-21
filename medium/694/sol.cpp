@@ -10,12 +10,12 @@ bool valid(int x, int y, vector<vector<int>>& g) {
 }
 
 void dfs(int x, int y, vector<vector<int>>& g, string& cur) {
-    vis[x][y] = 1;
+    g[x][y] = 0;
     for (int i=0; i<4; i++) {
         int nx = x + dx[i], ny = y + dy[i];
-        if (valid(nx, ny, g) && !vis[nx][ny]) {
+        if (valid(nx, ny, g)) {
             cur += dir[i];
-            dfs(nx, ny, g, vis, cur);
+            dfs(nx, ny, g, cur);
         }
     }
     cur += '0';
@@ -29,7 +29,7 @@ public:
         
         for (int i=0; i<n; i++) {
             for (int j=0; j<m; j++) {
-                if (!vis[i][j] && g[i][j]) {
+                if (g[i][j]) {
                     string cur = "";
                     dfs(i, j, g, cur);
                     ans.insert(cur);
