@@ -5,12 +5,11 @@ const int GRAY = 2;
 const int BLACK = 3;
 
 vector<int> g[N];
-vector<int> vis, col;
+vector<int> col;
 bool possible = true;
 
 void init(int n) {
     for (int i=0; i<N; i++) g[i].clear();
-    vis.assign(n, 0);
     col.assign(n, WHITE);
     possible = true;
 }
