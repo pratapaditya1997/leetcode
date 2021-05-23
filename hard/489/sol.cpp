@@ -50,6 +50,9 @@ public:
             
             if (vis.find({nx, ny}) == vis.end() && robot.move()) {
                 Dfs(nx, ny, nd, robot);
+                
+                // in normal dfs, control flow itself comes back to (x, y) position
+                // but here, we have to physically move the robot back to the original cell
                 GoBack(robot);
             }
             
