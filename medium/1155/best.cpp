@@ -1,32 +1,36 @@
+typedef long long int ll;
+
+const ll MOD = 1e9 + 7;
+
+inline ll Add(ll x, ll y) {
+    x += y;
+    if (x >= MOD) x -= MOD;
+    return x;
+}
+
+inline ll Sub(ll x, ll y) {
+    x -= y;
+    if (x < 0) x += MOD;
+    return x;
+}
+
 class Solution {
 public:
-    int mod = 1e9+7;
-    
-    void add(int& a, int b) {
-        a += b;
-        if(a >= mod) a -= mod;
-    }
-    
-    void sub(int& a, int b) {
-        a -= b;
-        if(a<0) a += mod;
-    }
-    
-    int numRollsToTarget(int d, int f, int target) {
-        vector<int> prevDp(target+1,0), curDp(target+1,0);
-        prevDp[0] = 1;
-        for(int i=1; i<=d; i++) {
-            int cur = 0;
-            for(int j=1; j<=target; j++) {
-                add(cur,prevDp[j-1]);
-                if(j>f)  sub(cur,prevDp[j-f-1]);
-                curDp[j] = cur;
+    int numRollsToTarget(int n, int f, int target) {
+        vector<ll> cur_dp(target + 1, 0), old_dp(target + 1, 0);
+        old_dp[0] = 1;
+        
+        for (int i=1; i <= n; ++i) {
+            ll cur = 0;
+            for (int j=1; j <= target; ++j) {
+                cur = Add(cur, old_dp[j-1]);
+                if (j-f-1 >= 0) cur = Sub(cur, old_dp[j-f-1]);
+                cur_dp[j] = cur;
             }
-            for(int j=0; j<=target; j++) {
-                prevDp[j] = curDp[j];
-                curDp[j] = 0;
-            }
+            old_dp = cur_dp;
+            cur_dp.assign(target + 1, 0);
         }
-        return prevDp[target];
+        
+        return old_dp[target];
     }
 };
