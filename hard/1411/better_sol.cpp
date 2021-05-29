@@ -17,9 +17,7 @@ struct Matrix {
     vector<vector<T>> d;
     int n, m;
     
-    Matrix(int _n, int _m) {
-        n = _n;
-        m = _m;
+    Matrix(int _n, int _m): n(_n), m(_m) {
         d = vector<vector<T>> (n, vector<T>(m, 0));
     }
     
