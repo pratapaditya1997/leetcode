@@ -1,28 +1,28 @@
 class Solution {
 public:
-    int dp[1001][1001];
-    int n;
     string s;
+    vector<vector<int>> dp;
     
-    int f(int i, int j) {
-        if(i > j) return 0;
-        if(j == i+1 || j == i) return s[i] == s[j];
+    int f(int l, int r) {
+        if (l == r) return 1;
+        if (l + 1 == r && s[l] == s[r]) return 1;
+        if (dp[l][r] != -1) return dp[l][r];
         
-        int& ret = dp[i][j];
-        if(ret != -1) return ret;
-        ret = 0;
-        if(s[i] == s[j]) ret = f(i+1, j-1);
-        return ret;
+        int res = 0;
+        if (s[l] == s[r]) res = f(l+1, r-1);
+        return dp[l][r] = res;
     }
     
     int countSubstrings(string str) {
-        n = size(str);
-        memset(dp, -1, sizeof dp);
+        int ans = 0, n = str.length();
         s = str;
         
-        int ans = 0;
-        for(int i=0; i<n; i++) {
-            for(int j=i; j<n; j++) ans += f(i,j);
+        dp = vector<vector<int>> (n, vector<int>(n, -1));
+        
+        for (int i=0; i<n; ++i) {
+            for (int j=i; j<n; ++j) {
+                if (f(i, j)) ++ans;
+            }
         }
         return ans;
     }
