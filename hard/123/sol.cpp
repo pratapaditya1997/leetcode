@@ -1,15 +1,17 @@
+const int INF = 1e5;
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int buy1 = INT_MIN, buy2 = INT_MIN;
-        int sell1 =0, sell2 = 0;
+        int b1 = -INF, b2 = -INF, s1 = -INF, s2 = -INF;
         
-        for(int price: prices) {
-            buy1 = max(buy1, -price);
-            sell1 = max(sell1, price + buy1);
-            buy2 = max(buy2, sell1 - price);
-            sell2 = max(sell2, price + buy2);
+        for (int p: prices) {
+            b1 = max(b1, -p);
+            s1 = max(s1, b1 + p);
+            b2 = max(b2, s1 - p);
+            s2 = max(s2, b2 + p);
         }
-        return sell2;
+        
+        return s2;
     }
 };
