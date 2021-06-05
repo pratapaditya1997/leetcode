@@ -24,11 +24,16 @@ public:
                 // unused bit, use this char and set this bit
                 int temp = used[idx];
                 
-                used[idx] |= (1<<i);
-                cur.push_back(letters[num][i]);
-                f(idx+1, used, cur);
-                used[idx] = temp;
-                cur.pop_back();
+                // setting things for next recursive call
+                used[idx] |= (1<<i);            // set ith bit temporarily
+                cur.push_back(letters[num][i]); // use the ith letter of the current digit
+                
+                // the next recursive call
+                f(idx+1, used, cur);            // recurse to the next state
+                
+                // clearing the above things
+                used[idx] = temp;               // unset the ith bit
+                cur.pop_back();                 // remove the ith letter of current digit
             }
         }
     }
